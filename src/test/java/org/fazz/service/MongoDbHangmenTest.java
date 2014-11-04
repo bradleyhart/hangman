@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.fazz.model.Hangman.car;
+import static org.fazz.model.Hangman.hangman;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
@@ -28,9 +28,9 @@ public class MongoDbHangmenTest {
 
     @Test
     public void getAllCarsFromMongo() {
-        final Hangman hangman1 = car("Audi", "A6", 2004, 40000);
-        final Hangman hangman2 = car("Jaguar", "X6", 2005, 30000);
-        final Hangman hangman3 = car("Nissan", "ZX", 2006, 10000);
+        final Hangman hangman1 = hangman("Audi", "A6", 2004, 40000);
+        final Hangman hangman2 = hangman("Jaguar", "X6", 2005, 30000);
+        final Hangman hangman3 = hangman("Nissan", "ZX", 2006, 10000);
         List<Hangman> expectedHangmans = new ArrayList<Hangman>(){{
             add(hangman1);
             add(hangman2);
@@ -46,7 +46,7 @@ public class MongoDbHangmenTest {
 
     @Test
     public void addsCarToMongo() {
-        Hangman hangman = car("Audi", "A6", 2004, 40000);
+        Hangman hangman = hangman("Audi", "A6", 2004, 40000);
 
         mongoDbHangmen.add(hangman);
 
@@ -55,7 +55,7 @@ public class MongoDbHangmenTest {
 
     @Test
     public void getsCarFromMongo() {
-        Hangman expectedHangman = car("Audi", "A6", 2004, 40000);
+        Hangman expectedHangman = hangman("Audi", "A6", 2004, 40000);
         when(mongoTemplate.findById("car-id", Hangman.class)).thenReturn(expectedHangman);
 
         Hangman actualHangman = mongoDbHangmen.get("car-id");

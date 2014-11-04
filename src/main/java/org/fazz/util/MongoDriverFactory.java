@@ -1,6 +1,7 @@
 package org.fazz.util;
 
 import com.mongodb.*;
+import org.springframework.data.mongodb.core.query.Criteria;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,10 @@ public class MongoDriverFactory {
 
     public static BasicDBObject dbObject(String key, Object object){
         return new BasicDBObject(key, object);
+    }
+
+    public static Criteria criteria(String key){
+        return new Criteria(key);
     }
 
     public static BasicDBList dbList(BasicDBObject... objects){

@@ -1,12 +1,16 @@
 package org.fazz.service;
 
-import com.mongodb.DBCollection;
 import org.fazz.model.Hangman;
+import org.fazz.model.Word;
 import org.fazz.query.LetterQuery;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
 
 import java.util.List;
 
+import static org.fazz.util.MongoDriverFactory.dbObject;
+import static org.springframework.data.mongodb.core.query.Criteria.*;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
 public class MongoDbHangmen implements Hangmen {
@@ -37,8 +41,25 @@ public class MongoDbHangmen implements Hangmen {
         return mongoTemplate.find(query(letterQuery.toMongoCriteria()), Hangman.class);
     }
 
-    private DBCollection carCollection() {
-        return mongoTemplate.getCollection("car");
+    @Override
+    public void add(Word word) {
+        mongoTemplate.insert(word);
     }
+
+    @Override
+    public Word getRandomWord() {
+        double random = Math.random();
+
+        Word greaterThanRandom = mongoTemplate.findOne(
+                query(where("random").gte(random)).
+                        with(new Sort(Sort.Direction.ASC, "random")), Word.class);
+        if (greaterThanRandom != null) return greaterThanRandom;
+
+        return mongoTemplate.findOne(
+                query(where("random").lte(random)).
+                        with(new Sort(Sort.Direction.DESC, "random")),
+                Word.class);
+    }
+
 
 }

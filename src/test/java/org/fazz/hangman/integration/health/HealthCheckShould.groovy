@@ -1,4 +1,4 @@
-package org.fazz.cars.integration.health
+package org.fazz.hangman.integration.health
 
 import org.fazz.tomcat.WebApplication
 import spock.lang.Specification

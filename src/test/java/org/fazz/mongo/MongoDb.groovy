@@ -2,6 +2,7 @@ package org.fazz.mongo
 
 import org.fazz.config.persistence.MongoConfig
 import org.fazz.model.Hangman
+import org.fazz.model.Word
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.data.mongodb.core.MongoTemplate
 
@@ -21,6 +22,7 @@ class MongoDb {
 
     static def isEmpty() {
         getMongoTemplate().dropCollection(Hangman)
+        getMongoTemplate().dropCollection(Word)
     }
 
     static def getMongoContext() {

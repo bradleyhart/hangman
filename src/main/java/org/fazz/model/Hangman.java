@@ -22,7 +22,7 @@ public class Hangman {
         this.price = price;
     }
 
-    public static Hangman car(String make, String model, Integer year, Integer price) {
+    public static Hangman hangman(String make, String model, Integer year, Integer price) {
         return new Hangman(make, model, year, price);
     }
 
