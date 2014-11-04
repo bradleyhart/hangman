@@ -1,36 +1,20 @@
-package org.fazz.search;
+package org.fazz.query;
 
 import org.springframework.data.mongodb.core.query.Criteria;
-
-import javax.persistence.*;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
 import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
 
-@Entity
-@Table(name = "search")
-public class CarSearch {
+public class LetterQuery {
 
-    private Integer id;
     private String make;
     private String model;
     private Integer year;
     private Integer price;
 
-    public static CarSearch carSearch() {
-        return new CarSearch();
-    }
-
-    @Id
-    @GeneratedValue
-    @Column(name = "id")
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public static LetterQuery carSearch() {
+        return new LetterQuery();
     }
 
     public void setMake(String make) {

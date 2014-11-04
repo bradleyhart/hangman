@@ -1,7 +1,7 @@
 package org.fazz.mongo
 
-import org.fazz.config.persistence.document.MongoConfig
-import org.fazz.model.Car
+import org.fazz.config.persistence.MongoConfig
+import org.fazz.model.Hangman
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.data.mongodb.core.MongoTemplate
 
@@ -20,7 +20,7 @@ class MongoDb {
     }
 
     static def isEmpty() {
-        getMongoTemplate().dropCollection(Car)
+        getMongoTemplate().dropCollection(Hangman)
     }
 
     static def getMongoContext() {

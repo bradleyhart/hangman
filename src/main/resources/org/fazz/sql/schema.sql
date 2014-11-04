@@ -1,7 +1,0 @@
-CREATE TABLE search (
-  id    MEDIUMINT NOT NULL AUTO_INCREMENT,
-  make  VARCHAR(255),
-  model VARCHAR(255),
-  price INTEGER,
-  year  INTEGER
-);

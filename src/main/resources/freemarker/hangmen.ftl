@@ -2,20 +2,20 @@
 
 <@layout.defaultLayout "View Cars">
 <ul class="results">
-    <#list cars as car>
+    <#list hangmans as hangman>
         <li>
-            <dl class="car">
+            <dl class="hangman">
                 <dt>Make</dt>
-                <dd class="make">${car.make}</dd>
+                <dd class="make">${hangman.make}</dd>
 
                 <dt>Model</dt>
-                <dd class="model">${car.model}</dd>
+                <dd class="model">${hangman.model}</dd>
 
                 <dt>Year</dt>
-                <dd class="year">${car.year?c}</dd>
+                <dd class="year">${hangman.year?c}</dd>
 
                 <dt>Price</dt>
-                <dd class="price">${car.price}</dd>
+                <dd class="price">${hangman.price}</dd>
             </dl>
         </li>
     </#list>

@@ -2,3 +2,6 @@
 *.ipr
 target
 bin
+.idea
+lib
+

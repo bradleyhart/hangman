@@ -13,9 +13,9 @@
 <header>
     <nav>
         <ul>
-            <li><a href="${request.contextPath}/view-cars">All</a></li>
-            <li><a href="${request.contextPath}/add-car">Add</a></li>
-            <li><a href="${request.contextPath}/search-cars">Search</a></li>
+            <li><a href="${request.contextPath}/view-hangmans">All</a></li>
+            <li><a href="${request.contextPath}/add-hangman">Add</a></li>
+            <li><a href="${request.contextPath}/search-hangmans">Search</a></li>
         </ul>
     </nav>
 </header>

@@ -16,7 +16,7 @@ import java.io.IOException;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan({"org.fazz.controller", "org.fazz.search"})
+@ComponentScan({"org.fazz.controller", "org.fazz.query"})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override

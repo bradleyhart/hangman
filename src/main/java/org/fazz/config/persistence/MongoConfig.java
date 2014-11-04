@@ -1,6 +1,6 @@
-package org.fazz.config.persistence.document;
+package org.fazz.config.persistence;
 
-import org.fazz.service.MongoDbCarListings;
+import org.fazz.service.MongoDbHangmen;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDbFactory;
@@ -29,8 +29,8 @@ public class MongoConfig {
     }
 
     @Bean
-    public MongoDbCarListings mongoDbCarListings() throws Exception {
-        return new MongoDbCarListings(mongoTemplate());
+    public MongoDbHangmen mongoDbCarListings() throws Exception {
+        return new MongoDbHangmen(mongoTemplate());
     }
 
 }
