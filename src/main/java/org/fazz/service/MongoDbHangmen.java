@@ -2,15 +2,12 @@ package org.fazz.service;
 
 import org.fazz.model.Hangman;
 import org.fazz.model.Word;
-import org.fazz.query.LetterQuery;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
 
 import java.util.List;
 
-import static org.fazz.util.MongoDriverFactory.dbObject;
-import static org.springframework.data.mongodb.core.query.Criteria.*;
+import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
 public class MongoDbHangmen implements Hangmen {
@@ -22,8 +19,9 @@ public class MongoDbHangmen implements Hangmen {
     }
 
     @Override
-    public void add(Hangman hangman) {
+    public Hangman add(Hangman hangman) {
         mongoTemplate.insert(hangman);
+        return hangman;
     }
 
     @Override
@@ -34,11 +32,6 @@ public class MongoDbHangmen implements Hangmen {
     @Override
     public List<Hangman> all() {
         return mongoTemplate.findAll(Hangman.class);
-    }
-
-    @Override
-    public List<Hangman> match(LetterQuery letterQuery) {
-        return mongoTemplate.find(query(letterQuery.toMongoCriteria()), Hangman.class);
     }
 
     @Override
@@ -53,12 +46,24 @@ public class MongoDbHangmen implements Hangmen {
         Word greaterThanRandom = mongoTemplate.findOne(
                 query(where("random").gte(random)).
                         with(new Sort(Sort.Direction.ASC, "random")), Word.class);
+
         if (greaterThanRandom != null) return greaterThanRandom;
 
         return mongoTemplate.findOne(
                 query(where("random").lte(random)).
                         with(new Sort(Sort.Direction.DESC, "random")),
                 Word.class);
+    }
+
+    @Override
+    public Hangman update(Hangman update) {
+        mongoTemplate.save(update);
+        return update;
+    }
+
+    @Override
+    public void delete(Hangman hangman) {
+        mongoTemplate.remove(hangman);
     }
 
 

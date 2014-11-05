@@ -1,69 +1,41 @@
 package org.fazz.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.apache.commons.lang3.builder.EqualsBuilder.*;
 import static org.apache.commons.lang3.builder.HashCodeBuilder.*;
 
 public class Hangman {
 
     private String id;
-    private String make;
-    private String model;
-    private Integer year;
-    private Integer price;
+    private Word word;
+    private Set<Guess> guesses;
 
-    private Hangman() {
-        // For Spring
+    private Hangman(Word word) {
+        this.word = word;
+        this.guesses = new HashSet<>();
     }
 
-    private Hangman(String make, String model, Integer year, Integer price) {
-        this.make = make;
-        this.model = model;
-        this.year = year;
-        this.price = price;
-    }
-
-    public static Hangman hangman(String make, String model, Integer year, Integer price) {
-        return new Hangman(make, model, year, price);
+    public Guess take(Guess guess){
+        this.guesses.add(guess);
+        return guess;
     }
 
     public String getId() {
         return id;
     }
 
-    public String getMake() {
-        return make;
+    public Set<Guess> getGuesses() {
+        return guesses;
     }
 
-    public String getModel() {
-        return model;
+    public Word getWord() {
+        return word;
     }
 
-    public Integer getYear() {
-        return year;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setMake(String make) {
-        this.make = make;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public void setYear(Integer year) {
-        this.year = year;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
+    public static Hangman hangman(Word word) {
+        return new Hangman(word);
     }
 
     @Override

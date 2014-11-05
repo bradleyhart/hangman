@@ -8,15 +8,17 @@ import java.util.List;
 
 public interface Hangmen {
 
-    void add(Hangman hangman);
+    Hangman add(Hangman hangman);
 
     Hangman get(String ca);
 
     List<Hangman> all();
 
-    List<Hangman> match(LetterQuery letterQuery);
-
     void add(Word word);
 
     Word getRandomWord();
+
+    Hangman update(Hangman hangman);
+
+    void delete(Hangman hangman);
 }

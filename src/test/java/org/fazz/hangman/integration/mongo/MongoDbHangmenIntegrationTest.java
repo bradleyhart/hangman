@@ -1,14 +1,20 @@
 package org.fazz.hangman.integration.mongo;
 
+import org.fazz.model.Hangman;
 import org.fazz.mongo.MongoDb;
 import org.fazz.service.MongoDbHangmen;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 
+import static org.fazz.model.Guess.guess;
+import static org.fazz.model.Hangman.hangman;
 import static org.fazz.model.Word.word;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 public class MongoDbHangmenIntegrationTest {
@@ -36,152 +42,64 @@ public class MongoDbHangmenIntegrationTest {
         assertThat(repeatUntilFound(() -> mongoDbHangmen.getRandomWord().equals(word("spiderman"))), is(true));
         assertThat(repeatUntilFound(() -> mongoDbHangmen.getRandomWord().equals(word("batman"))), is(true));
         assertThat(repeatUntilFound(() -> mongoDbHangmen.getRandomWord().equals(word("superman"))), is(true));
-
     }
+
+    @Test
+    public void insertAndRetrieveHangman() throws Exception {
+        Hangman hangman = hangman(word("canary"));
+        hangman.take(guess('s'));
+        hangman.take(guess('y'));
+
+        Hangman saved = mongoDbHangmen.add(hangman);
+
+        Hangman retrieved = mongoDbHangmen.get(saved.getId());
+
+        assertThat(saved, is(equalTo(retrieved)));
+        assertThat(retrieved.getWord(), is(equalTo(word("canary"))));
+        assertThat(retrieved.getGuesses().size(), is(2));
+        assertThat(retrieved.getGuesses().contains(guess('s')), is(true));
+        assertThat(retrieved.getGuesses().contains(guess('y')), is(true));
+    }
+
+    @Test
+    public void retrieveAllHangmen() throws Exception {
+        mongoDbHangmen.add(hangman(word("canary")));
+        mongoDbHangmen.add(hangman(word("parrot")));
+        mongoDbHangmen.add(hangman(word("falcon")));
+        mongoDbHangmen.add(hangman(word("chicken")));
+
+        List<Hangman> hangmen = mongoDbHangmen.all();
+
+        assertThat(hangmen.size(), is(equalTo(4)));
+    }
+
+    @Test
+    public void updateAHangman() throws Exception {
+        Hangman saved = mongoDbHangmen.add(hangman(word("canary")));
+
+        saved.take(guess('f'));
+        mongoDbHangmen.update(saved);
+        Hangman updated = mongoDbHangmen.get(saved.getId());
+
+        assertThat(updated.getGuesses().iterator().next(), is(guess('f')));
+    }
+
+    @Test
+    public void deleteAHangman() throws Exception {
+        Hangman saved = mongoDbHangmen.add(hangman(word("canary")));
+        mongoDbHangmen.delete(saved);
+
+        assertThat(mongoDbHangmen.get(saved.getId()), nullValue());
+    }
+
+
 
     static Boolean repeatUntilFound(Callable<Boolean> callable) throws Exception {
         for (int i = 0; i < 100; i++) {
             Boolean found = callable.call();
-            if(found) return true;
+            if (found) return true;
         }
         return false;
     }
-
-//    @Test
-//    public void findCarThatMatchesMultiple() {
-//        Hangman audi1 = hangman("Audi", "A6", 2004, 40000);
-//        Hangman audi2 = hangman("Audi", "A6", 2004, 40000);
-//        mongoDbHangmen.add(audi1);
-//        mongoDbHangmen.add(audi2);
-//        mongoDbHangmen.add(hangman("Jaguar", "X6", 2005, 30000));
-//        mongoDbHangmen.add(hangman("Nissan", "ZX", 2006, 10000));
-//
-//        LetterQuery search = carSearch();
-//        search.setModel("A6");
-//        search.setMake("Audi");
-//        search.setYear(2004);
-//        search.setPrice(40000);
-//
-//        List<Hangman> hangmans = mongoDbHangmen.match(search);
-//
-//        assertThat(hangmans.size(), is(2));
-//        assertThat(hangmans.get(0), is(audi1));
-//        assertThat(hangmans.get(1), is(audi2));
-//    }
-//
-//    @Test
-//    public void findCarThatMatchesMakeCriteria() {
-//        Hangman audi = hangman("Audi", "A6", 2004, 40000);
-//        mongoDbHangmen.add(audi);
-//        mongoDbHangmen.add(hangman("Jaguar", "X6", 2005, 30000));
-//        mongoDbHangmen.add(hangman("Nissan", "ZX", 2006, 10000));
-//
-//        LetterQuery search = carSearch();
-//        search.setMake("Audi");
-//
-//        List<Hangman> hangmans = mongoDbHangmen.match(search);
-//
-//        assertThat(hangmans.size(), is(1));
-//        assertThat(hangmans.get(0), is(audi));
-//    }
-//
-//    @Test
-//    public void findCarThatMatchesModelCriteria() {
-//        Hangman audi = hangman("Audi", "A6", 2004, 40000);
-//        mongoDbHangmen.add(audi);
-//        mongoDbHangmen.add(hangman("Jaguar", "X6", 2005, 30000));
-//        mongoDbHangmen.add(hangman("Nissan", "ZX", 2006, 10000));
-//
-//        LetterQuery search = carSearch();
-//        search.setModel("A6");
-//
-//        List<Hangman> hangmans = mongoDbHangmen.match(search);
-//
-//        assertThat(hangmans.size(), is(1));
-//        assertThat(hangmans.get(0), is(audi));
-//    }
-//
-//    @Test
-//    public void findCarThatMatchesPriceCriteria() {
-//        Hangman audi = hangman("Audi", "A6", 2004, 40000);
-//        mongoDbHangmen.add(audi);
-//        mongoDbHangmen.add(hangman("Jaguar", "X6", 2005, 30000));
-//        mongoDbHangmen.add(hangman("Nissan", "ZX", 2006, 10000));
-//
-//        LetterQuery search = carSearch();
-//        search.setPrice(40000);
-//
-//        List<Hangman> hangmans = mongoDbHangmen.match(search);
-//
-//        assertThat(hangmans.size(), is(1));
-//        assertThat(hangmans.get(0), is(audi));
-//    }
-//
-//    @Test
-//    public void findCarThatMatchesYearCriteria() {
-//        Hangman audi = hangman("Audi", "A6", 2004, 40000);
-//        mongoDbHangmen.add(audi);
-//        mongoDbHangmen.add(hangman("Jaguar", "X6", 2005, 30000));
-//        mongoDbHangmen.add(hangman("Nissan", "ZX", 2006, 10000));
-//
-//        LetterQuery search = carSearch();
-//        search.setYear(2004);
-//
-//        List<Hangman> hangmans = mongoDbHangmen.match(search);
-//
-//        assertThat(hangmans.size(), is(1));
-//        assertThat(hangmans.get(0), is(audi));
-//    }
-//
-//    @Test
-//    public void findCarThatMatchesCombinations() {
-//        Hangman audi = hangman("Audi", "A6", 2004, 40000);
-//        mongoDbHangmen.add(audi);
-//        mongoDbHangmen.add(hangman("Jaguar", "X6", 2005, 30000));
-//        mongoDbHangmen.add(hangman("Nissan", "ZX", 2006, 10000));
-//
-//        LetterQuery search = carSearch();
-//        search.setYear(2004);
-//        search.setModel("A6");
-//
-//        List<Hangman> hangmans = mongoDbHangmen.match(search);
-//
-//        assertThat(hangmans.size(), is(1));
-//        assertThat(hangmans.get(0), is(audi));
-//    }
-//
-//    @Test
-//    public void findCarThatMatchesShouldIgnoreBlankString() {
-//        Hangman audi = hangman("Audi", "A6", 2004, 40000);
-//        mongoDbHangmen.add(audi);
-//        mongoDbHangmen.add(hangman("Jaguar", "X6", 2005, 30000));
-//        mongoDbHangmen.add(hangman("Nissan", "ZX", 2006, 10000));
-//
-//        LetterQuery search = carSearch();
-//        search.setModel("");
-//        search.setMake("");
-//        search.setPrice(40000);
-//
-//        List<Hangman> hangmans = mongoDbHangmen.match(search);
-//
-//        assertThat(hangmans.size(), is(1));
-//        assertThat(hangmans.get(0), is(audi));
-//    }
-//
-//    @Test
-//    public void findNoCarsWhenOneCriteriaDoesNotMatch() {
-//        Hangman audi = hangman("Audi", "A6", 2004, 40000);
-//        mongoDbHangmen.add(audi);
-//        mongoDbHangmen.add(hangman("Jaguar", "X6", 2005, 30000));
-//        mongoDbHangmen.add(hangman("Nissan", "ZX", 2006, 10000));
-//
-//        LetterQuery search = carSearch();
-//        search.setYear(2004);
-//        search.setModel("A10");
-//
-//        List<Hangman> hangmans = mongoDbHangmen.match(search);
-//
-//        assertThat(hangmans.size(), is(0));
-//    }
 
 }
