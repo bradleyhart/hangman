@@ -1,6 +1,6 @@
 <#import "layout/layout.ftl" as layout>
 
-<@layout.defaultLayout "View Car">
+<@layout.defaultLayout "View Hangman">
 <dl class="hangman">
     <dt>Make</dt>
     <dd id="make">${hangman.make}</dd>

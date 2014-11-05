@@ -1,6 +1,6 @@
 <#import "layout/layout.ftl" as layout>
 
-<@layout.defaultLayout "View Cars">
+<@layout.defaultLayout "View Hangmen">
 <ul class="results">
     <#list hangmans as hangman>
         <li>

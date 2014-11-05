@@ -1,5 +1,5 @@
 def databaseLocation = "/home/brad"
-def databaseName = "cars"
+def databaseName = "hangmen"
 def mongodLocation = "/home/brad/software/mongodb/mongodb-linux-x86_64-2.6.4/bin/mongod"
 
 if (!isRunningAlready(databaseLocation, databaseName)) {

@@ -1,4 +1,4 @@
-<#macro defaultLayout title="Cars">
+<#macro defaultLayout title="Hangmen">
 <!DOCTYPE html>
 <html>
 <head>

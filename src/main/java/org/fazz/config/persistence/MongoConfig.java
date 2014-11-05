@@ -20,7 +20,7 @@ public class MongoConfig {
 
     @Bean
     public MongoDbFactory mongoDbFactory() throws Exception {
-        return new SimpleMongoDbFactory(mongo().getObject(), "cars");
+        return new SimpleMongoDbFactory(mongo().getObject(), "hangmen");
     }
 
     @Bean
@@ -29,7 +29,7 @@ public class MongoConfig {
     }
 
     @Bean
-    public MongoDbHangmen mongoDbCarListings() throws Exception {
+    public MongoDbHangmen mongoDbHangmen() throws Exception {
         return new MongoDbHangmen(mongoTemplate());
     }
 

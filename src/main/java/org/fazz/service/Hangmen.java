@@ -2,7 +2,6 @@ package org.fazz.service;
 
 import org.fazz.model.Hangman;
 import org.fazz.model.Word;
-import org.fazz.query.LetterQuery;
 
 import java.util.List;
 
