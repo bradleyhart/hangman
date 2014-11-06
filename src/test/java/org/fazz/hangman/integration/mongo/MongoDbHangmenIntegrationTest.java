@@ -92,8 +92,6 @@ public class MongoDbHangmenIntegrationTest {
         assertThat(mongoDbHangmen.get(saved.getId()), nullValue());
     }
 
-
-
     static Boolean repeatUntilFound(Callable<Boolean> callable) throws Exception {
         for (int i = 0; i < 100; i++) {
             Boolean found = callable.call();

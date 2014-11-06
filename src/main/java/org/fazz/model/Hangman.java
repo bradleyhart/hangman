@@ -19,6 +19,10 @@ public class Hangman {
         this.guesses = new HashSet<>();
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public Guess take(Guess guess) {
         this.guesses.add(guess);
         return guess;

@@ -1,6 +1,10 @@
 package org.fazz.config.web;
 
 import freemarker.template.TemplateException;
+import org.fazz.session.CookieHangmanSessionResolver;
+import org.fazz.session.HangmanCookies;
+import org.fazz.session.HangmanSessionResolver;
+import org.fazz.session.OneHourHangmanCookies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -42,5 +46,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         return resolver;
     }
 
+    @Bean
+    public HangmanCookies cookieFactory(){
+        return new OneHourHangmanCookies();
+    }
 
 }

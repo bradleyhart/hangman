@@ -6,10 +6,24 @@ import org.fazz.model.Word
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.data.mongodb.core.MongoTemplate
 
+import static org.fazz.model.Word.word
+import static org.fazz.mongo.MongoDb.isEmpty
+import static org.fazz.mongo.MongoDb.isRunning
+
 class MongoDb {
 
     private static boolean started = false
     private static AnnotationConfigApplicationContext mongoContext
+
+    public static void main(String[] args) {
+//        isRunning()
+        isEmpty()
+
+        getMongoTemplate().insert(word("monkey"))
+        getMongoTemplate().insert(word("tiger"))
+        getMongoTemplate().insert(word("lion"))
+        getMongoTemplate().insert(word("hippo"))
+    }
 
     static isRunning() {
         new Thread({
