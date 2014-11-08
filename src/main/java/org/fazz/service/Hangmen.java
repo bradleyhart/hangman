@@ -9,7 +9,7 @@ public interface Hangmen {
 
     Hangman add(Hangman hangman);
 
-    Hangman get(String ca);
+    Hangman get(String id);
 
     List<Hangman> all();
 

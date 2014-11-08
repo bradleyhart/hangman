@@ -3,6 +3,7 @@ package org.fazz.controller;
 import org.fazz.model.Guess;
 import org.fazz.model.Hangman;
 import org.fazz.model.Hit;
+import org.fazz.service.Hangmen;
 import org.fazz.session.HangmanSessionResolver;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,6 +21,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class HangmanControllerTest {
@@ -27,6 +29,8 @@ public class HangmanControllerTest {
     private HangmanSessionResolver hangmanSessionResolver = mock(HangmanSessionResolver.class);
     private HttpServletRequest request = mock(HttpServletRequest.class);
     private HttpServletResponse response = mock(HttpServletResponse.class);
+    private final Hangmen hangmen = mock(Hangmen.class);
+    private HangmanController hangmanController = new HangmanController(hangmanSessionResolver, hangmen);
 
     @Before
     public void setup(){
@@ -37,7 +41,7 @@ public class HangmanControllerTest {
     public void returnCorrectView(){
         when(hangmanSessionResolver.getOrCreateHangman(request, response)).thenReturn(hangman(word("")));
 
-        ModelAndView modelAndView = new HangmanController(hangmanSessionResolver)
+        ModelAndView modelAndView = hangmanController
                 .hangman(request, response);
 
         assertThat(modelAndView.getViewName(), is(equalTo("hangman")));
@@ -51,7 +55,7 @@ public class HangmanControllerTest {
 
         when(hangmanSessionResolver.getOrCreateHangman(request, response)).thenReturn(hangman);
 
-        ModelAndView modelAndView = new HangmanController(hangmanSessionResolver)
+        ModelAndView modelAndView = hangmanController
                 .hangman(request, response);
 
         assertThat((Integer)modelAndView.getModel().get("attempts"), is(2));
@@ -63,7 +67,7 @@ public class HangmanControllerTest {
 
         when(hangmanSessionResolver.getOrCreateHangman(request, response)).thenReturn(hangman);
 
-        ModelAndView modelAndView = new HangmanController(hangmanSessionResolver)
+        ModelAndView modelAndView = hangmanController
                 .hangman(request, response);
 
         assertThat((Integer)modelAndView.getModel().get("wordLength"), is(3));
@@ -76,10 +80,33 @@ public class HangmanControllerTest {
 
         when(hangmanSessionResolver.getOrCreateHangman(request, response)).thenReturn(hangman);
 
-        ModelAndView modelAndView = new HangmanController(hangmanSessionResolver)
+        ModelAndView modelAndView = hangmanController
                 .hangman(request, response);
 
         assertThat(((Set<Hit>)modelAndView.getModel().get("hits")).iterator().next(), is(equalTo(hit(0, 'a'))));
+    }
+
+    @Test
+    public void addIdToModel(){
+        Hangman hangman = hangman(word("ab"));
+        hangman.setId("id");
+
+        when(hangmanSessionResolver.getOrCreateHangman(request, response)).thenReturn(hangman);
+
+        ModelAndView modelAndView = hangmanController
+                .hangman(request, response);
+
+        assertThat(((String) modelAndView.getModel().get("id")), is(equalTo("id")));
+    }
+
+    @Test
+    public void guessAddedToHangmanAndUpdated(){
+        when(hangmen.get("id")).thenReturn(hangman(word("abc")));
+
+        Hangman hangman = hangmanController.guess("id", 'a');
+
+        assertThat(hangman.getGuesses().contains(Guess.guess('a')), is(true));
+        verify(hangmen).update(hangman);
     }
 
 }

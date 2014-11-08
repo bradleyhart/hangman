@@ -19,7 +19,6 @@ import static org.junit.Assert.assertThat;
 
 public class MongoDbHangmenIntegrationTest {
 
-
     private MongoDbHangmen mongoDbHangmen;
 
     @Before

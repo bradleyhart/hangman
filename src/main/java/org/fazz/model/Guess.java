@@ -1,9 +1,11 @@
 package org.fazz.model;
 
+import java.io.Serializable;
+
 import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
 import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
 
-public class Guess {
+public class Guess implements Serializable {
     private Character value;
 
     public Guess(Character value) {

@@ -1,10 +1,12 @@
 package org.fazz.model;
 
 
+import java.io.Serializable;
+
 import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
 import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
 
-public class Hit {
+public class Hit implements Serializable {
 
     private Integer index;
     private Character character;

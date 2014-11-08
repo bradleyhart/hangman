@@ -1,5 +1,6 @@
 package org.fazz.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -8,7 +9,7 @@ import static org.apache.commons.lang3.builder.EqualsBuilder.*;
 import static org.apache.commons.lang3.builder.HashCodeBuilder.*;
 import static org.fazz.model.Hit.hit;
 
-public class Hangman {
+public class Hangman implements Serializable {
 
     private String id;
     private Word word;
