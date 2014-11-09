@@ -48,7 +48,7 @@ public class HangmanControllerTest {
     }
 
     @Test
-    public void addAttemptsToModel(){
+    public void addHangmanToModel(){
         Hangman hangman = hangman(word(""));
         hangman.take(Guess.guess('a'));
         hangman.take(Guess.guess('b'));
@@ -58,45 +58,7 @@ public class HangmanControllerTest {
         ModelAndView modelAndView = hangmanController
                 .hangman(request, response);
 
-        assertThat((Integer)modelAndView.getModel().get("attempts"), is(2));
-    }
-
-    @Test
-    public void addWordLengthToModel(){
-        Hangman hangman = hangman(word("abc"));
-
-        when(hangmanSessionResolver.getOrCreateHangman(request, response)).thenReturn(hangman);
-
-        ModelAndView modelAndView = hangmanController
-                .hangman(request, response);
-
-        assertThat((Integer)modelAndView.getModel().get("wordLength"), is(3));
-    }
-
-    @Test
-    public void addHitsToModel(){
-        Hangman hangman = hangman(word("ab"));
-        hangman.take(Guess.guess('a'));
-
-        when(hangmanSessionResolver.getOrCreateHangman(request, response)).thenReturn(hangman);
-
-        ModelAndView modelAndView = hangmanController
-                .hangman(request, response);
-
-        assertThat(((Set<Hit>)modelAndView.getModel().get("hits")).iterator().next(), is(equalTo(hit(0, 'a'))));
-    }
-
-    @Test
-    public void addIdToModel(){
-        Hangman hangman = hangman(word("ab"));
-        hangman.setId("id");
-
-        when(hangmanSessionResolver.getOrCreateHangman(request, response)).thenReturn(hangman);
-
-        ModelAndView modelAndView = hangmanController
-                .hangman(request, response);
-
-        assertThat(((String) modelAndView.getModel().get("id")), is(equalTo("id")));
+        assertThat((Hangman)modelAndView.getModel().get("hangman"), is(hangman));
     }
 
     @Test

@@ -29,8 +29,10 @@ public class HangmanController {
 
     @RequestMapping(value = "/hangman", method = RequestMethod.GET)
     public ModelAndView hangman(HttpServletRequest request, HttpServletResponse response) {
-        Hangman hangman = hangmanSessionResolver.getOrCreateHangman(request, response);
-        return hangmanView(hangman);
+        final Hangman hangman = hangmanSessionResolver.getOrCreateHangman(request, response);
+        return new ModelAndView("hangman") {{
+            addObject("hangman", hangman);
+        }};
     }
 
     @RequestMapping(value = "/guess", method = RequestMethod.POST)
@@ -40,15 +42,6 @@ public class HangmanController {
         hangman.take(Guess.guess(guessCharacter));
         hangmen.update(hangman);
         return hangman;
-    }
-
-    private ModelAndView hangmanView(final Hangman hangman) {
-        return new ModelAndView("hangman") {{
-            addObject("id", hangman.getId());
-            addObject("attempts", hangman.getGuesses().size());
-            addObject("hits", hangman.getHits());
-            addObject("wordLength", hangman.getWord().toString().length());
-        }};
     }
 
 }

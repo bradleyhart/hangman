@@ -19,7 +19,14 @@ public class HangmanTest {
         hangman.take(guess('a'));
         hangman.take(guess('b'));
 
-        assertThat(hangman.getGuesses().size(), is(2));
+        assertThat(hangman.getAttempts(), is(2));
+    }
+
+    @Test
+    public void getWordLength(){
+        Hangman hangman = hangman(word("panda"));
+
+        assertThat(hangman.getWordLength(), is(5));
     }
 
     @Test
@@ -51,6 +58,32 @@ public class HangmanTest {
         assertThat(hits.contains(hit(1, 'a')), is(true));
         assertThat(hits.contains(hit(4, 'a')), is(true));
 
+    }
+
+//    <span data-word-index="${index}">${hits.characterAtIndex(index)}</span>
+
+    @Test
+    public void canKnowIfThereIsAHitAtIndex(){
+        Hangman hangman = hangman(word("panda"));
+        hangman.take(guess('p'));
+        hangman.take(guess('a'));
+
+        assertThat(hangman.isHitAtIndex(0), is(true));
+        assertThat(hangman.isHitAtIndex(1), is(true));
+        assertThat(hangman.isHitAtIndex(2), is(false));
+        assertThat(hangman.isHitAtIndex(3), is(false));
+        assertThat(hangman.isHitAtIndex(4), is(true));
+    }
+
+    @Test
+    public void canGetCharacterAtIndex(){
+        Hangman hangman = hangman(word("panda"));
+        hangman.take(guess('p'));
+        hangman.take(guess('a'));
+
+        assertThat(hangman.characterAtIndex(0), is('p'));
+        assertThat(hangman.characterAtIndex(1), is('a'));
+        assertThat(hangman.characterAtIndex(4), is('a'));
     }
 
 }

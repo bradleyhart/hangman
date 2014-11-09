@@ -20,6 +20,14 @@ public class Hit implements Serializable {
         return new Hit(index, character);
     }
 
+    public Integer getIndex() {
+        return index;
+    }
+
+    public Character getCharacter() {
+        return character;
+    }
+
     @Override
     public int hashCode() {
         return reflectionHashCode(this);

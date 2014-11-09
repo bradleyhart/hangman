@@ -79,4 +79,25 @@ public class Hangman implements Serializable {
         }
         return index;
     }
+
+    public Integer getAttempts() {
+        return getGuesses().size();
+    }
+
+    public Integer getWordLength() {
+        return word.toString().length();
+    }
+
+    public Boolean isHitAtIndex(int index) {
+        for (Hit hit : getHits()) {
+            if(hit.getIndex() == index){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Character characterAtIndex(int index) {
+        return getWord().toString().toCharArray()[index];
+    }
 }
