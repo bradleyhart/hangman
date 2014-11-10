@@ -44,6 +44,13 @@ public class HangmanController {
         return hangman;
     }
 
+    @RequestMapping(value = "/hangmen", method = RequestMethod.GET)
+    public ModelAndView hangmen() {
+        return new ModelAndView("hangmen") {{
+            addObject("hangmen", hangmen.all());
+        }};
+    }
+
     @RequestMapping(value = "/hangman", method = RequestMethod.POST)
     public ModelAndView hangmanGuess(@RequestParam("hangmanId") String hangmanId, @RequestParam("guess") Character guessCharacter) {
         Hangman hangman = hangmen.get(hangmanId);

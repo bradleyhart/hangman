@@ -12,6 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import static org.fazz.model.Hangman.hangman;
@@ -40,6 +42,21 @@ public class HangmanControllerTest {
                 .hangman(request, response);
 
         assertThat(modelAndView.getViewName(), is(equalTo("hangman")));
+    }
+
+    @Test
+    public void allHangmen(){
+        ArrayList<Hangman> hangmen = new ArrayList<Hangman>() {{
+            add(hangman(word("one word")));
+            add(hangman(word("two words")));
+        }};
+        when(this.hangmen.all()).thenReturn(hangmen);
+
+        ModelAndView modelAndView = hangmanController
+                .hangmen();
+
+        assertThat(modelAndView.getViewName(), is(equalTo("hangmen")));
+        assertThat((ArrayList<Hangman>)modelAndView.getModel().get("hangmen"), is(equalTo(hangmen)));
     }
 
     @Test
