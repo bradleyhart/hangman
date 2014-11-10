@@ -8,20 +8,20 @@ import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCod
 
 public class Hit implements Serializable {
 
-    private Integer index;
+    private Integer wordIndex;
     private Character character;
 
-    public Hit(Integer index, Character character) {
+    public Hit(Integer wordIndex, Character character) {
         this.character = character;
-        this.index = index;
+        this.wordIndex = wordIndex;
     }
 
     public static Hit hit(Integer index, Character character){
         return new Hit(index, character);
     }
 
-    public Integer getIndex() {
-        return index;
+    public Integer getWordIndex() {
+        return wordIndex;
     }
 
     public Character getCharacter() {

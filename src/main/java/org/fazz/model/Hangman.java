@@ -90,7 +90,7 @@ public class Hangman implements Serializable {
 
     public Boolean isHitAtIndex(int index) {
         for (Hit hit : getHits()) {
-            if(hit.getIndex() == index){
+            if(hit.getWordIndex() == index){
                 return true;
             }
         }
