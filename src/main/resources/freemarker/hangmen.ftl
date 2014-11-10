@@ -6,10 +6,10 @@
         <li>
             <dl class="hangman">
                 <dt>ID</dt>
-                <dd class="make">${hangman.id}</dd>
+                <dd class="hangmanId">${hangman.id}</dd>
 
                 <dt>Attempts</dt>
-                <dd class="model">${hangman.attempts}</dd>
+                <dd class="attempts">${hangman.attempts}</dd>
             </dl>
         </li>
     </#list>
