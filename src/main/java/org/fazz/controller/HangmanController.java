@@ -44,4 +44,13 @@ public class HangmanController {
         return hangman;
     }
 
+    @RequestMapping(value = "/hangman", method = RequestMethod.POST)
+    public ModelAndView hangmanGuess(@RequestParam("hangmanId") String hangmanId, @RequestParam("guess") Character guessCharacter) {
+        Hangman hangman = hangmen.get(hangmanId);
+        hangman.take(Guess.guess(guessCharacter));
+        return new ModelAndView("hangman") {{
+            addObject("hangman", hangmen.update(hangman));
+        }};
+    }
+
 }

@@ -2,38 +2,38 @@
 
 <@layout.defaultLayout "Hangman">
 
-<form name="form" method="post" action="guess">
+<form name="form" method="post" action="hangman">
     <input type=hidden id="wordLength" name="wordLength" value="${hangman.wordLength}">
     <input type=hidden id="attempts" name="attempts" value="${hangman.attempts}">
     <input type=hidden id="hangmanId" name="hangmanId" value="${hangman.id}">
 
     <select id="guess" name="guess">
         <option value="a">a</option>
-        <option value="a">b</option>
-        <option value="a">c</option>
-        <option value="a">d</option>
-        <option value="a">e</option>
-        <option value="a">f</option>
-        <option value="a">g</option>
-        <option value="a">h</option>
-        <option value="a">i</option>
-        <option value="a">j</option>
-        <option value="a">k</option>
-        <option value="a">l</option>
-        <option value="a">m</option>
-        <option value="a">n</option>
-        <option value="a">o</option>
-        <option value="a">p</option>
-        <option value="a">q</option>
-        <option value="a">r</option>
-        <option value="a">s</option>
-        <option value="a">t</option>
-        <option value="a">u</option>
-        <option value="a">v</option>
-        <option value="a">w</option>
-        <option value="a">x</option>
-        <option value="a">y</option>
-        <option value="a">z</option>
+        <option value="b">b</option>
+        <option value="c">c</option>
+        <option value="d">d</option>
+        <option value="e">e</option>
+        <option value="f">f</option>
+        <option value="g">g</option>
+        <option value="h">h</option>
+        <option value="i">i</option>
+        <option value="j">j</option>
+        <option value="k">k</option>
+        <option value="l">l</option>
+        <option value="m">m</option>
+        <option value="n">n</option>
+        <option value="o">o</option>
+        <option value="p">p</option>
+        <option value="q">q</option>
+        <option value="r">r</option>
+        <option value="s">s</option>
+        <option value="t">t</option>
+        <option value="u">u</option>
+        <option value="v">v</option>
+        <option value="w">w</option>
+        <option value="x">x</option>
+        <option value="y">y</option>
+        <option value="z">z</option>
     </select>
 
     <input type="submit">

@@ -32,11 +32,6 @@ public class HangmanControllerTest {
     private final Hangmen hangmen = mock(Hangmen.class);
     private HangmanController hangmanController = new HangmanController(hangmanSessionResolver, hangmen);
 
-    @Before
-    public void setup(){
-
-    }
-
     @Test
     public void returnCorrectView(){
         when(hangmanSessionResolver.getOrCreateHangman(request, response)).thenReturn(hangman(word("")));
@@ -68,6 +63,18 @@ public class HangmanControllerTest {
         Hangman hangman = hangmanController.guess("id", 'a');
 
         assertThat(hangman.getGuesses().contains(Guess.guess('a')), is(true));
+        verify(hangmen).update(hangman);
+    }
+
+    @Test
+    public void guessAddedToHangmanAndUpdatedWithModelWithView(){
+        Hangman hangman = hangman(word("abc"));
+        when(hangmen.get("id")).thenReturn(hangman);
+        when(hangmen.update(hangman)).thenReturn(hangman);
+
+        ModelAndView modelAndView = hangmanController.hangmanGuess("id", 'a');
+
+        assertThat(((Hangman)modelAndView.getModel().get("hangman")).getGuesses().contains(Guess.guess('a')), is(true));
         verify(hangmen).update(hangman);
     }
 
